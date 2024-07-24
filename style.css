@@ -1,15 +1,36 @@
-#row-one, #row-two, #row-three, #zero {
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.output {
+    display: flex;
+    border: 1px solid black;
+    height: 50px;
+    width: 215px;
+    justify-content: center;
+}
+
+.numpad {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    
+}
+
+#row-one, #row-two, #row-three, #zero, #clr {
     display: flex;
     justify-content: center;
     
 }
 
 #operators {
-    margin: auto;
-    padding: auto;
+    padding-left: 15px;
     display: inline-flex;
     flex-direction: column;
-    justify-content: flex-start;
+    
     
 }
 
@@ -20,5 +41,10 @@
 
 .op {
     width: 50px;
+    height: 50px;
+}
+
+.clear {
+    width: 150px;
     height: 50px;
 }

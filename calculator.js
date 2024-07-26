@@ -1,69 +1,123 @@
-let numberA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-let operator = ["=", "-", "*", "/"];
-let numberB = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-let num1 = ""
-let num2 = ""
+let operator = "";
+let num1 = "";
+let num2 = "";
 
-const numberButton = document.querySelectorAll(".num")
+const numberButton = document.querySelectorAll(".num");
+const opButton = document.querySelectorAll(".op");
+const clrButton = document.getElementById("clear")
+const eqlButton = document.getElementById("equals")
 
-numberButton.forEach(btn =>{
-    btn.addEventListener("click", (e) =>{
-        setOperand(e.innerHTML)
-    }) 
-})
+function loadPage(){
+    numberButton.forEach(btn =>{
+        btn.addEventListener("click", (e) =>{
+            setOperand(e.target.innerHTML);
+        }) 
+    })
+
+    opButton.forEach(btn =>{
+        btn.addEventListener("click", (e) =>{
+            setOperator(e.target.innerHTML);
+        })
+    })
+
+    clrButton.addEventListener("click", () =>{
+        clear()
+    })
+
+    eqlButton.addEventListener("click", () => {
+        if (operator === "" && num1 === "" && num2 === ""){
+            total = "ERROR"
+            updateDisplay()
+        } else{
+            operate(operator, num1, num2)
+        }
+        
+    })
+    total = 0;
+    updateDisplay();
+}
+
 
 function setOperand(numX){
    if (num1 === "" || num1 === null) {
-    num1 = numX;
-    console.log(num1)
-    return
-   }
-    }
+    num1 = parseInt(numX);
+    console.log(num1);
+    total = num1;
+    updateDisplay();
+   } else if (num2 === "" || num2 === null && operator != "") {
+    num2 = parseInt(numX);
+    console.log(num2);
+    total = num2;
+    updateDisplay();
+   };
+};
     
-
+function setOperator(op){
+    operator = op
+    console.log(operator)
+    total = operator;
+    updateDisplay();
+};
 
 
 function add(a, b) {
-    return a + b;
-}
-console.log(add(2, 3))
+    total = a + b;
+    updateDisplay();
+    return
+};
+
 
 function subtract(a, b) {
-    return a - b;
-}
-console.log(subtract(6, 2))
+    total = a - b;
+    updateDisplay();
+    return
+};
+
 
 function multiply(a, b) {
-    return a * b;
-}
-console.log(multiply(2, 4))
+    total = a * b;
+    updateDisplay();
+    return
+};
+
 
 function divide(a, b) {
-    return a / b;
-}
-console.log(divide(6, 3))
+    if (num1 === 0 || num2 === 0){
+        total = "OH NO!!!!!!!"
+        updateDisplay();
+        return
+    } else {
+        total = a / b;
+        updateDisplay();
+        return
+    } 
+};
 
-function operate (operator, numberA, numberB) {
+
+function operate (operator, num1, num2) {
     if (operator === "+") {
-        add(numberA, numberB);
+        add(num1, num2);
     } else if (operator === "-") {
-        subtract(numberA, numberB);
+        subtract(num1, num2);
     } else if (operator === "*") {
-        multiply(numberA, numberB);
+        multiply(num1, num2);
     } else if (operator === "/") {
-        divide(numberA. numberB)
+        divide(num1. num2)
     }
-}
+};
 
-function updateDisplay(total) {
-    const display= document.getElementById("display")
-    display.textContent= total
-}
-
-function calculate() {
-    updateDisplay(0)
-}
+function updateDisplay() {
+    const display= document.getElementById("display");
+    display.textContent= total;
+};
 
 function clear() {
-    updateDisplay(0)
-}
+    num1 = "";
+    num2 = "";
+    operator = "";
+    total = 0;
+    updateDisplay();
+    return
+};
+
+loadPage()

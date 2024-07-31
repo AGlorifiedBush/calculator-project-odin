@@ -25,6 +25,9 @@ function loadPage(){
     })
 
     eqlButton.addEventListener("click", () => {
+        parseInt(num1);
+        parseInt(num2);
+
         if (operator === "" && num1 === "" && num2 === ""){
             total = "ERROR"
             updateDisplay()
@@ -40,12 +43,17 @@ function loadPage(){
 
 function setOperand(numX){
    if (num1 === "" || num1 === null) {
-    num1 = parseInt(numX);
+    num1 = numX;
     console.log(num1);
     total = num1;
     updateDisplay();
-   } else if (num2 === "" || num2 === null && operator != "") {
-    num2 = parseInt(numX);
+   } else if(operator === "" || operator === null){
+    num1 += numX;
+    console.log(num1);
+    total = num1;
+    updateDisplay();
+   } if (operator != "") {
+    num2 += numX;
     console.log(num2);
     total = num2;
     updateDisplay();
@@ -53,16 +61,20 @@ function setOperand(numX){
 };
     
 function setOperator(op){
-    operator = op
+    operator += op
     console.log(operator)
     total = operator;
+    numX = "";
     updateDisplay();
 };
 
 
 function add(a, b) {
-    total = a + b;
+    total = parseInt(a) + parseInt(b);
     updateDisplay();
+    num1 = total
+    operator = "";
+    num2 = "";
     return
 };
 
@@ -70,6 +82,9 @@ function add(a, b) {
 function subtract(a, b) {
     total = a - b;
     updateDisplay();
+    num1 = total
+    operator = "";
+    num2 = "";
     return
 };
 
@@ -77,18 +92,24 @@ function subtract(a, b) {
 function multiply(a, b) {
     total = a * b;
     updateDisplay();
+    num1 = total
+    operator = "";
+    num2 = "";
     return
 };
 
 
 function divide(a, b) {
-    if (num1 === 0 || num2 === 0){
+    if (a === "0" || b === "0"){
         total = "OH NO!!!!!!!"
         updateDisplay();
         return
     } else {
         total = a / b;
         updateDisplay();
+        num1 = total
+        operator = "";
+        num2 = "";
         return
     } 
 };
@@ -102,7 +123,10 @@ function operate (operator, num1, num2) {
     } else if (operator === "*") {
         multiply(num1, num2);
     } else if (operator === "/") {
-        divide(num1. num2)
+        divide(num1, num2)
+    } else if (operator.length > 1) {
+        total = "ERROR";
+        updateDisplay();
     }
 };
 

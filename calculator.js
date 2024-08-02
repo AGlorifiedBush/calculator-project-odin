@@ -4,8 +4,11 @@ let num2 = "";
 
 const numberButton = document.querySelectorAll(".num");
 const opButton = document.querySelectorAll(".op");
-const clrButton = document.getElementById("clear")
-const eqlButton = document.getElementById("equals")
+const clrButton = document.getElementById("clear");
+const eqlButton = document.getElementById("equals");
+const backButton = document.getElementById("back");
+const decimalButton = document.getElementById("decimal")
+const display= document.getElementById("display");
 
 function loadPage(){
     numberButton.forEach(btn =>{
@@ -23,11 +26,25 @@ function loadPage(){
     clrButton.addEventListener("click", () =>{
         clear()
     })
+    
+    backButton.addEventListener("click", () =>{
+        backspace()
+    })
+
+    decimalButton.addEventListener("click", (e)=>{
+        decimal(e.target.innerHTML)
+
+        if (num1.includes(".") && operator === "") {
+            decimalButton.setAttribute("disabled", "")
+        } else if (num2.includes(".")) {
+            decimalButton.setAttribute("disabled", "")
+        }
+    })
 
     eqlButton.addEventListener("click", () => {
-        parseInt(num1);
-        parseInt(num2);
-
+        parseFloat(num1);
+        parseFloat(num2);
+        decimalButton.removeAttribute("disabled")
         if (operator === "" && num1 === "" && num2 === ""){
             total = "ERROR"
             updateDisplay()
@@ -37,6 +54,7 @@ function loadPage(){
         
     })
     total = 0;
+    
     updateDisplay();
 }
 
@@ -65,12 +83,25 @@ function setOperator(op){
     console.log(operator)
     total = operator;
     numX = "";
+    decimalButton.removeAttribute("disabled");
     updateDisplay();
 };
 
+function decimal(dec){
+    if (operator === "" || operator === null) {
+        num1 += dec;
+        total += dec;
+        updateDisplay()
+    } else {
+        num2 += dec;
+        total += dec;
+        updateDisplay()
+    }
+    
+}
 
 function add(a, b) {
-    total = parseInt(a) + parseInt(b);
+    total = parseFloat(a) + parseFloat(b);
     updateDisplay();
     num1 = total
     operator = "";
@@ -105,7 +136,9 @@ function divide(a, b) {
         updateDisplay();
         return
     } else {
-        total = a / b;
+        tot = a / b;
+        parseFloat(tot);
+        total = tot.toFixed(2);
         updateDisplay();
         num1 = total
         operator = "";
@@ -128,18 +161,40 @@ function operate (operator, num1, num2) {
         total = "ERROR";
         updateDisplay();
     }
+    
 };
 
+
 function updateDisplay() {
-    const display= document.getElementById("display");
-    display.textContent= total;
+    if (isNaN(total)){
+        display.textContent= total;
+    } else {
+        total = total*100;
+        total = Math.round(total);
+        total = total/100;
+        display.textContent= total;
+    }
+    
 };
+
+function backspace() {
+    if(operator === "" || operator === null) {
+        num1 = num1.toString().slice(0, -1);
+        total = total.toString().slice(0, -1);
+        updateDisplay();
+    } else if(operator != "" || operator === null) {
+        num2 = num2.toString().slice(0, -1);
+         total = total.toString().slice(0, -1);
+        updateDisplay();
+    }
+}
 
 function clear() {
     num1 = "";
     num2 = "";
     operator = "";
     total = 0;
+    decimalButton.removeAttribute("disabled")
     updateDisplay();
     return
 };

@@ -21,7 +21,7 @@
     
 }
 
-#row-one, #row-two, #row-three, #zero, #clr {
+#row-one, #row-two, #row-three, #row-four, #clr {
     display: flex;
     justify-content: center;
     
@@ -35,7 +35,7 @@
     
 }
 
-.num {
+.num, .back, .dec {
     width: 50px;
     height: 50px;
 }
@@ -52,4 +52,8 @@
 .eql {
     width: 50px;
     height: 50px;
+}
+
+#decimal, #back {
+    font-size: 28px;
 }
